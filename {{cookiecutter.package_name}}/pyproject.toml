@@ -1,0 +1,121 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "{{ cookiecutter.package_name }}"
+description = "{{ cookiecutter.project_description }}"
+readme = "README.md"
+requires-python = ">={{ cookiecutter.minimum_python_version }}"
+version = "{{ cookiecutter.version }}"
+authors = [
+    { name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}" }
+]
+{% if cookiecutter.include_license != "none" -%}
+license = { text = "{{ cookiecutter.include_license }}" }
+{% endif -%}
+keywords = ["cli", "ascii", "alpaca", "cowsay", "fun"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+{%- if cookiecutter.include_license == "MIT" %}
+    "License :: OSI Approved :: MIT License",
+{%- endif %}
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: {{ cookiecutter.python_version }}",
+{%- if cookiecutter.python_version == "3.11" %}
+    "Programming Language :: Python :: 3.12",
+{%- endif %}
+    "Topic :: Utilities",
+    "Topic :: Games/Entertainment",
+]
+dependencies = [
+    "click>=8.0.0",
+    "colorama>=0.4.0",
+]
+
+[dependency-groups]
+{%- if cookiecutter.include_docs == "y" %}
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+{%- endif %}
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.9.0",
+    "pyright>=1.1.402",
+{%- if cookiecutter.include_pre_commit == "y" %}
+    "pre-commit>=3.0.0",
+{%- endif %}
+]
+
+[project.scripts]
+{{ cookiecutter.cli_name }} = "{{ cookiecutter.package_name }}.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+Repository = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+Issues = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/issues"
+{%- if cookiecutter.include_docs == "y" %}
+Documentation = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}"
+{%- endif %}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --cov={{ cookiecutter.package_name }} --cov-report=term-missing --cov-report=xml"
+
+[tool.pyright]
+exclude = [".venv", "build", "dist"]
+venvPath = "."
+venv = ".venv"
+typeCheckingMode = "basic"
+
+[tool.ruff]
+line-length = 120
+target-version = "py{{ cookiecutter.python_version.replace('.', '') }}"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "C",   # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "C90", # mccabe
+]
+ignore = [
+    "E501", # line too long, handled by formatter
+]
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["{{ cookiecutter.package_name }}"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.coverage.run]
+source = ["src"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]

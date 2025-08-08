@@ -1,0 +1,97 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.py"
+      - ".github/workflows/code-quality.yml"
+      - "pyproject.toml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "**.py"
+      - ".github/workflows/code-quality.yml"
+      - "pyproject.toml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: |
+          uv sync --dev
+
+      - name: Run linting
+        run: |
+          uv run ruff check .
+
+      - name: Run formatting check
+        run: |
+          uv run ruff format --check .
+
+      - name: Run type checking
+        run: |
+          uv run pyright .
+
+      - name: Run tests
+        run: |
+          uv run pytest -v --cov=alpacasay --cov-report=xml --cov-report=term-missing
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+
+      - name: Build package
+        run: |
+          uv build
+
+  test-cli:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install package
+        run: |
+          uv sync
+          uv pip install -e .
+
+      - name: Test CLI installation
+        run: |
+          uv run alpacasay "GitHub Actions test successful!"
+
+      - name: Test CLI options
+        run: |
+          uv run alpacasay --help
+          uv run alpacasay --version
+          uv run alpacasay --alpaca happy --color green "All tests pass!"
+          uv run alpacasay --safer-together

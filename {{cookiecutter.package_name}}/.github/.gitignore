@@ -1,0 +1,5 @@
+#VSCode - Copilot
+.vscode/
+copilot-instructions.md
+instructions/*.instructions.md
+COPILOT_INSTRUCTIONS_README.md
