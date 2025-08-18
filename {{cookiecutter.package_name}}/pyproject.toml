@@ -33,7 +33,7 @@ classifiers = [
     "Topic :: Games/Entertainment",
 ]
 dependencies = [
-    "click>=8.0.0",
+    "typer>=0.12.0",
     "colorama>=0.4.0",
 ]
 
@@ -56,7 +56,7 @@ dev = [
 ]
 
 [project.scripts]
-{{ cookiecutter.cli_name }} = "{{ cookiecutter.package_name }}.cli:main"
+{{ cookiecutter.cli_name }} = "{{ cookiecutter.package_name }}.cli:app"
 
 [project.urls]
 Homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"

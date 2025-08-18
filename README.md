@@ -21,15 +21,11 @@ This template provides a solid foundation for Python packages with the following
 1. Install `cruft` (recommended) or `cookiecutter`:
    ```bash
    pip install cruft
-   # or
-   pip install cookiecutter
    ```
 
 2. Generate your project:
    ```bash
    cruft create https://github.com/mazzma12/python-package-template
-   # or
-   cookiecutter https://github.com/mazzma12/python-package-template
    ```
 
 3. Follow the prompts to configure your project
@@ -101,6 +97,7 @@ After generating your project:
 
 1. **Initialize Git**:
    ```bash
+   cd your-project
    git init
    git add .
    git commit -m "feat: initial project setup"
@@ -116,15 +113,6 @@ After generating your project:
    uv run pre-commit install
    ```
 
-4. **Run tests**:
-   ```bash
-   uv run pytest
-   ```
-
-5. **Test the CLI**:
-   ```bash
-   uv run your-cli-name "Hello World!"
-   ```
 
 ## Development Tools Included
 

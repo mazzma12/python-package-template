@@ -70,5 +70,5 @@ if include_pre_commit == "y":
 if include_docker == "y":
     print("5. Test Docker build: docker build -t {{ cookiecutter.project_slug }} .")
 
-print("6. Test your CLI: uv run {{ cookiecutter.cli_name }} 'Hello World!'")
+print("6. Test your CLI: uv run {{ cookiecutter.cli_name }} --help")
 print("\n🎉 Happy coding with your new Python package!")
