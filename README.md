@@ -133,6 +133,34 @@ cruft update
 
 This allows you to keep your project in sync with template improvements while preserving your customizations.
 
+## Testing the Template
+
+This template includes comprehensive tests to ensure it generates valid projects with all option combinations.
+
+### Running Tests Locally
+
+```bash
+# Run all template tests
+make test
+
+# Quick template test
+make test-template
+
+# Or use pytest directly
+pytest tests/ -v
+
+# Clean up test artifacts
+make clean
+```
+
+### Continuous Integration
+
+The template is automatically tested on GitHub Actions with:
+- Template generation validation
+- All option combinations testing  
+- Generated code syntax verification
+- Project structure validation
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit issues and pull requests.

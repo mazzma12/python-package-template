@@ -1,0 +1,62 @@
+name: Template Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-template:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r tests/requirements.txt
+    
+    - name: Run template generation tests
+      run: |
+        make test
+    
+    - name: Test default template generation
+      run: |
+        python -m cookiecutter . --no-input --output-dir /tmp
+        ls -la /tmp/alpacasay/
+    
+    - name: Verify generated project structure
+      run: |
+        cd /tmp/alpacasay
+        # Check that core files exist
+        test -f pyproject.toml
+        test -f README.md
+        test -f src/alpacasay/__init__.py
+        test -f src/alpacasay/cli.py
+        test -f tests/test_cli.py
+        # Check that optional files exist (defaults)
+        test -f LICENSE
+        test -f docs/index.md
+        test -f Dockerfile
+        test -f .github/workflows/ci.yml
+    
+    - name: Test generated project syntax
+      run: |
+        cd /tmp/alpacasay
+        python -m py_compile src/alpacasay/__init__.py
+        python -m py_compile src/alpacasay/cli.py
+        python -m py_compile src/alpacasay/alpacas.py
+        python -m py_compile src/alpacasay/formatter.py
+        python -m py_compile tests/test_cli.py
+        python -m py_compile tests/test_alpacas.py
+        python -m py_compile tests/test_formatter.py
