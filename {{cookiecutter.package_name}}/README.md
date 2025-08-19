@@ -26,7 +26,7 @@
 ## Features
 
 - 🦙 **Three unique alpaca designs** - default, happy, and thinking
-- 🌈 **Color support** - make your alpacas colorful  
+- 🌈 **Color support** - make your alpacas colorful
 - 📏 **Customizable width** - control the speech bubble size
 - 📁 **File input** - read messages from files
 - 🔧 **Pipe support** - works with stdin

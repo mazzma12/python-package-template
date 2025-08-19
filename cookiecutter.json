@@ -1,6 +1,7 @@
 {
     "project_name": "Alpacasay",
     "package_name": "alpacasay",
+    "project_slug": "{{ cookiecutter.package_name|replace('_', '-') }}",
     "project_description": "A fun CLI tool that displays messages with ASCII alpacas - like cowsay but with alpacas!",
     "author_name": "MazzMa",
     "author_email": "say@alpacas.net",
@@ -8,17 +9,16 @@
     "version": "0.1.0",
     "python_version": "3.11",
     "minimum_python_version": "3.11",
-    
+
     "include_license": ["MIT", "none"],
     "include_docs": ["y", "n"],
     "include_docker": ["y", "n"],
     "include_publishing": ["y", "n"],
     "include_github_actions": ["y", "n"],
     "include_pre_commit": ["y", "n"],
-    
+
     "cli_name": "{{ cookiecutter.package_name }}",
-    "project_slug": "{{ cookiecutter.package_name|replace('_', '-') }}",
-    
+
     "_template": "https://github.com/{{cookiecutter.github_username}}/python-package-template",
     "_copy_without_render": [
         "*.pyc",

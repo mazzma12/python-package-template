@@ -1,3 +1,0 @@
-# Test dependencies for cookiecutter template validation
-pytest>=7.0.0
-cookiecutter>=2.0.0

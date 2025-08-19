@@ -5,7 +5,7 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 test: install-test-deps ## Run template generation tests
-	python -m pytest tests/ -v
+	uv run python -m pytest tests/ -v
 
 test-template: ## Test template generation with default values
 	@echo "Testing template generation..."
@@ -22,4 +22,4 @@ clean: ## Clean up test artifacts
 	find . -name "__pycache__" -type d -exec rm -rf {} +
 
 install-test-deps: ## Install test dependencies
-	pip install -r tests/requirements.txt
+	uv sync --dev
