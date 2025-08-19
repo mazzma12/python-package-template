@@ -13,7 +13,7 @@ This directory contains comprehensive tests for the cookiecutter template to ens
 # Run all tests
 make test
 
-# Or use pytest directly  
+# Or use pytest directly
 pytest tests/ -v
 
 # Quick template test
@@ -29,4 +29,3 @@ Tests run automatically on GitHub Actions for:
 - All push/PR events
 - Template generation validation
 - Syntax verification
-

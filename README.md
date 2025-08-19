@@ -1,3 +1,4 @@
+![code-quality workflow](https://github.com/mazzma12/python-package-template/actions/workflows/test-template.yml/badge.svg)
 # Python Package Template
 
 A [Cookiecutter](https://cookiecutter.readthedocs.io/) template for creating modern Python packages with optional features.
@@ -157,7 +158,7 @@ make clean
 
 The template is automatically tested on GitHub Actions with:
 - Template generation validation
-- All option combinations testing  
+- All option combinations testing
 - Generated code syntax verification
 - Project structure validation
 

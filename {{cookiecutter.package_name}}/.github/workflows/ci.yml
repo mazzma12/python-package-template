@@ -16,34 +16,34 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Install uv
       uses: astral-sh/setup-uv@v4
       with:
         enable-cache: true
         cache-dependency-glob: "uv.lock"
-    
+
     - name: Set up Python ${{ matrix.python-version }}
       run: uv python install ${{ matrix.python-version }}
-    
+
     - name: Install dependencies
       run: uv sync --dev
-    
+
     - name: Lint with ruff
       run: uv run ruff check .
-    
+
     - name: Format check with ruff
       run: uv run ruff format --check .
-    
+
     - name: Type check with pyright
       run: uv run pyright
-    
+
     - name: Test with pytest
       run: uv run pytest --cov={{ cookiecutter.package_name }} --cov-report=xml --cov-report=term-missing
-    
+
     - name: Build package
       run: uv build
-    
+
     - name: Test CLI installation
       run: |
         uv run pip install dist/*.whl
