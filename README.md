@@ -115,25 +115,6 @@ After generating your project:
    ```
 
 
-## Development Tools Included
-
-- **[UV](https://github.com/astral-sh/uv)**: Fast Python package manager
-- **[Ruff](https://github.com/astral-sh/ruff)**: Lightning-fast linter and formatter
-- **[Pyright](https://github.com/microsoft/pyright)**: Static type checker
-- **[pytest](https://pytest.org/)**: Testing framework
-- **[MkDocs Material](https://squidfunk.github.io/mkdocs-material/)**: Documentation generator (optional)
-- **[Pre-commit](https://pre-commit.com/)**: Git hooks framework (optional)
-
-## Template Updates
-
-If you need to update your project when the template changes, you can:
-
-1. **Manual update**: Compare your project with a newly generated one and apply changes selectively
-2. **Use a diff tool**: Generate a new project and use tools like `diff` or `meld` to compare
-3. **Git-based approach**: Create a new branch with a fresh generation and merge changes
-
-Note: Template updates require manual intervention to preserve your customizations.
-
 ## Testing the Template
 
 This template includes comprehensive tests to ensure it generates valid projects with all option combinations.
@@ -153,14 +134,6 @@ pytest tests/ -v
 # Clean up test artifacts
 make clean
 ```
-
-### Continuous Integration
-
-The template is automatically tested on GitHub Actions with:
-- Template generation validation
-- All option combinations testing
-- Generated code syntax verification
-- Project structure validation
 
 ## Contributing
 
