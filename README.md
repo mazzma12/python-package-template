@@ -18,14 +18,14 @@ This template provides a solid foundation for Python packages with the following
 
 ## Quick Start
 
-1. Install `cruft` (recommended) or `cookiecutter`:
+1. Install `cookiecutter`:
    ```bash
-   pip install cruft
+   pip install cookiecutter
    ```
 
 2. Generate your project:
    ```bash
-   cruft create https://github.com/mazzma12/python-package-template
+   cookiecutter https://github.com/mazzma12/python-package-template
    ```
 
 3. Follow the prompts to configure your project
@@ -123,15 +123,15 @@ After generating your project:
 - **[MkDocs Material](https://squidfunk.github.io/mkdocs-material/)**: Documentation generator (optional)
 - **[Pre-commit](https://pre-commit.com/)**: Git hooks framework (optional)
 
-## Using Cruft for Template Updates
+## Template Updates
 
-If you used `cruft` to create your project, you can easily update it when the template changes:
+If you need to update your project when the template changes, you can:
 
-```bash
-cruft update
-```
+1. **Manual update**: Compare your project with a newly generated one and apply changes selectively
+2. **Use a diff tool**: Generate a new project and use tools like `diff` or `meld` to compare
+3. **Git-based approach**: Create a new branch with a fresh generation and merge changes
 
-This allows you to keep your project in sync with template improvements while preserving your customizations.
+Note: Template updates require manual intervention to preserve your customizations.
 
 ## Testing the Template
 
