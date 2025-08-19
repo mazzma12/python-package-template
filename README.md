@@ -1,4 +1,4 @@
-![code-quality workflow](https://github.com/mazzma12/python-package-template/actions/workflows/test-template.yml/badge.svg)
+[![Template Tests](https://github.com/mazzma12/python-package-template/actions/workflows/test-template.yml/badge.svg?branch=main)](https://github.com/mazzma12/python-package-template/actions/workflows/test-template.yml)
 # Python Package Template
 
 A [Cookiecutter](https://cookiecutter.readthedocs.io/) template for creating modern Python packages with optional features.
