@@ -1,5 +1,4 @@
 {% if cookiecutter.include_docker == "y" -%}
-# Stage 1: Build the python dependencies
 FROM docker.io/library/python:{{ cookiecutter.python_version }}-slim-bookworm AS builder
 
 # This approximately follows this guide: https://hynek.me/articles/docker-uv/
@@ -16,9 +15,9 @@ ENV PYTHONUNBUFFERED=True \
     UV_PROJECT_ENVIRONMENT=/usr/src/app/.venv
 
 COPY --from=ghcr.io/astral-sh/uv:0.8.12 /uv /uvx /bin/
-# Set working directory
-WORKDIR /app
 
+# Set working directory
+WORKDIR /usr/src/app
 
 # Synchronize dependencies.
 # This layer is cached until uv.lock or pyproject.toml change.
@@ -43,7 +42,7 @@ RUN --mount=type=cache,target=/root/.cache \
         --python=$UV_PROJECT_ENVIRONMENT
 
 # Stage 2: Final runtime image
-FROM docker.io/library/python:3.11-slim-bookworm
+FROM docker.io/library/python:{{ cookiecutter.python_version }}-slim-bookworm
 
 # Create non-root user
 RUN groupadd -r app && \
@@ -53,6 +52,7 @@ USER app
 WORKDIR /usr/src/app
 
 # Copy the application code
+COPY --from=builder --chown=app:app /usr/src/app/.venv /usr/src/app/.venv
 COPY --from=builder --chown=app:app /usr/src/app /usr/src/app
 
 # make sure we use the virtualenv python by default
@@ -63,7 +63,5 @@ RUN python -V && \
     python -Im site
 
 # Set the entrypoint to alpacasay
-ENTRYPOINT ["uv", "run", "{{ cookiecutter.cli_name }}"]
-
-CMD ["--safer-together"]
+ENTRYPOINT [{{ cookiecutter.cli_name }}]
 {%- endif %}
