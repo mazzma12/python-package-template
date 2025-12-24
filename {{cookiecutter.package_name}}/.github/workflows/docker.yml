@@ -69,4 +69,4 @@ jobs:
 
     - name: Test Docker image
       run: |
-        docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest --safer-together
+        docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest --help

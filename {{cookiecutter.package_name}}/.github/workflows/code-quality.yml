@@ -82,8 +82,7 @@ jobs:
 
       - name: Install package
         run: |
-          uv sync
-          uv pip install -e .
+          uv sync --dev
 
       - name: Test CLI installation
         run: |

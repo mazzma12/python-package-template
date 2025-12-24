@@ -62,6 +62,5 @@ ENV PATH="/usr/src/app/.venv/bin:$PATH"
 RUN python -V && \
     python -Im site
 
-# Set the entrypoint to alpacasay
 ENTRYPOINT [{{ cookiecutter.cli_name }}]
 {%- endif %}

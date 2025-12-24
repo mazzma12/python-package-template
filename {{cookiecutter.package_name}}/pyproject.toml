@@ -14,23 +14,15 @@ authors = [
 {% if cookiecutter.include_license != "none" -%}
 license = { text = "{{ cookiecutter.include_license }}" }
 {% endif -%}
-keywords = ["cli", "ascii", "alpaca", "cowsay", "fun"]
 classifiers = [
     "Development Status :: 4 - Beta",
-    "Environment :: Console",
     "Intended Audience :: Developers",
-    "Intended Audience :: End Users/Desktop",
 {%- if cookiecutter.include_license == "MIT" %}
     "License :: OSI Approved :: MIT License",
 {%- endif %}
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: {{ cookiecutter.python_version }}",
-{%- if cookiecutter.python_version == "3.11" %}
-    "Programming Language :: Python :: 3.12",
-{%- endif %}
-    "Topic :: Utilities",
-    "Topic :: Games/Entertainment",
 ]
 dependencies = [
     "typer>=0.12.0",
