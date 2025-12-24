@@ -1,35 +1,66 @@
 {% if cookiecutter.include_docker == "y" -%}
-# Use Python {{ cookiecutter.python_version }} slim image
-FROM python:{{ cookiecutter.python_version }}-slim
+FROM docker.io/library/python:{{ cookiecutter.python_version }}-slim-bookworm AS builder
+
+# This approximately follows this guide: https://hynek.me/articles/docker-uv/
+# Which creates a standalone environment with the dependencies.
+# - Silence uv complaining about not being able to use hard links,
+# - tell uv to byte-compile packages for faster application startups,
+# - prevent uv from accidentally downloading isolated Python builds,
+# - pick a Python (use `/usr/bin/python3.13` on uv 0.5.0 and later),
+# - and finally declare `/usr/src/app` as the target for `uv sync`.
+ENV PYTHONUNBUFFERED=True \
+    UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1 \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PROJECT_ENVIRONMENT=/usr/src/app/.venv
+
+COPY --from=ghcr.io/astral-sh/uv:0.8.12 /uv /uvx /bin/
 
 # Set working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Synchronize dependencies.
+# This layer is cached until uv.lock or pyproject.toml change.
+RUN --mount=type=cache,target=/root/.cache \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync \
+        --frozen \
+        --all-extras \
+        --no-install-project \
+        --no-dev \
+        --no-editable
 
-# Install UV
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.cargo/bin:$PATH"
 
-# Copy project files
-COPY pyproject.toml uv.lock ./
-COPY src/ ./src/
-COPY README.md{% if cookiecutter.include_license != "none" %} LICENSE{% endif %} ./
+COPY . /usr/src/app
 
-# Install the package
-RUN uv sync --frozen
+RUN --mount=type=cache,target=/root/.cache \
+    uv sync --frozen \
+        --all-extras \
+        --no-editable \
+        --no-dev \
+        --python=$UV_PROJECT_ENVIRONMENT
 
-# Create a non-root user
-RUN useradd --create-home --shell /bin/bash alpaca
-USER alpaca
-WORKDIR /home/alpaca
+# Stage 2: Final runtime image
+FROM docker.io/library/python:{{ cookiecutter.python_version }}-slim-bookworm
 
-# Set the entrypoint to {{ cookiecutter.cli_name }}
-ENTRYPOINT ["uv", "run", "{{ cookiecutter.cli_name }}"]
+# Create non-root user
+RUN groupadd -r app && \
+    useradd -r -d /usr/src/app -g app -N app
 
-# Default command
-CMD ["--safer-together"]
+USER app
+WORKDIR /usr/src/app
+
+# Copy the application code
+COPY --from=builder --chown=app:app /usr/src/app/.venv /usr/src/app/.venv
+COPY --from=builder --chown=app:app /usr/src/app /usr/src/app
+
+# make sure we use the virtualenv python by default
+ENV PATH="/usr/src/app/.venv/bin:$PATH"
+
+# Smoke test that the application can, in fact, be imported.
+RUN python -V && \
+    python -Im site
+
+ENTRYPOINT [{{ cookiecutter.cli_name }}]
 {%- endif %}

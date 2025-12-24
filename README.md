@@ -64,13 +64,9 @@ your-project/
 │   └── your_package/
 │       ├── __init__.py
 │       ├── cli.py              # Main CLI entry point
-│       ├── alpacas.py          # Core alpaca functionality
-│       └── formatter.py       # Message formatting
 ├── tests/
 │   ├── conftest.py
 │   ├── test_cli.py
-│   ├── test_alpacas.py
-│   └── test_formatter.py
 ├── docs/                       # (optional)
 │   ├── index.md
 │   ├── installation.md

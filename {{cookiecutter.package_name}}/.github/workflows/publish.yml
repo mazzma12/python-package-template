@@ -1,3 +1,4 @@
+{% if cookiecutter.include_publishing == "y" -%}
 name: Publish to PyPI
 
 on:
@@ -42,7 +43,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ cookiecutter.python_version }}
 
       - name: Install UV
         uses: astral-sh/setup-uv@v4
@@ -54,27 +55,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
-
-  celebrate:
-    needs: publish
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install UV
-        uses: astral-sh/setup-uv@v4
-
-      - name: Install published package
-        run: |
-          # Wait a bit for PyPI to process the upload
-          sleep 30
-          pip install alpacasay
-
-      - name: Celebrate release
-        run: |
-          alpacasay --alpaca happy --color green "🎉 New release published to PyPI! 🎉"
+{%- endif %}

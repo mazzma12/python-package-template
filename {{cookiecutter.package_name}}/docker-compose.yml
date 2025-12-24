@@ -1,6 +1,4 @@
 {% if cookiecutter.include_docker == "y" -%}
-version: '3.8'
-
 services:
   {{ cookiecutter.project_slug }}:
     build: .
@@ -10,13 +8,4 @@ services:
     environment:
       - TERM=xterm-256color
     command: ["--alpaca", "happy", "--color", "green", "Hello from Docker! 🐳"]
-
-  {{ cookiecutter.project_slug }}-prod:
-    build:
-      context: .
-      dockerfile: Dockerfile.production
-    container_name: {{ cookiecutter.project_slug }}-prod
-    environment:
-      - TERM=xterm-256color
-    command: ["--safer-together"]
 {%- endif %}
