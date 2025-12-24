@@ -61,8 +61,8 @@ class TestTemplateGeneration:
         assert (project_dir / "mkdocs.yml").exists()
         assert (project_dir / "Dockerfile").exists()
         assert (project_dir / "docker-compose.yml").exists()
-        assert (project_dir / ".github" / "workflows" / "ci.yml").exists()
-        assert (project_dir / ".github" / "workflows" / "pypi-publish.yml").exists()
+        assert (project_dir / ".github" / "workflows" / "code-quality.yml").exists()
+        assert (project_dir / ".github" / "workflows" / "publish.yml").exists()
         assert (project_dir / ".pre-commit-config.yaml").exists()
 
     def test_minimal_generation(self, temp_dir, template_dir):
@@ -247,10 +247,10 @@ class TestTemplateGeneration:
         assert project_dir.exists()
 
         # Check GitHub Actions files exist
-        assert (project_dir / ".github" / "workflows" / "ci.yml").exists()
+        assert (project_dir / ".github" / "workflows" / "code-quality.yml").exists()
 
         # Check publishing workflow is absent when publishing disabled
-        assert not (project_dir / ".github" / "workflows" / "pypi-publish.yml").exists()
+        assert not (project_dir / ".github" / "workflows" / "publish.yml").exists()
 
     def test_publishing_with_github_actions(self, temp_dir, template_dir):
         """Test template generation with publishing and GitHub Actions."""
@@ -289,5 +289,5 @@ class TestTemplateGeneration:
         assert project_dir.exists()
 
         # Check both CI and publishing workflows exist
-        assert (project_dir / ".github" / "workflows" / "ci.yml").exists()
-        assert (project_dir / ".github" / "workflows" / "pypi-publish.yml").exists()
+        assert (project_dir / ".github" / "workflows" / "code-quality.yml").exists()
+        assert (project_dir / ".github" / "workflows" / "publish.yml").exists()
