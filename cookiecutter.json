@@ -1,6 +1,6 @@
 {
     "project_name": "Alpacasay",
-    "package_name": "alpacasay",
+    "package_name": "{{ cookiecutter.project_name.lower()}}",
     "project_slug": "{{ cookiecutter.package_name|replace('_', '-') }}",
     "project_description": "A fun CLI tool that displays messages with ASCII alpacas - like cowsay but with alpacas!",
     "author_name": "MazzMa",

@@ -1,11 +1,7 @@
 """CLI interface for {{ cookiecutter.package_name }}."""
 
-import sys
-from pathlib import Path
-from typing import Annotated, Optional
-
+from typing import Annotated
 import typer
-
 
 app = typer.Typer(
     name="{{ cookiecutter.cli_name }}",

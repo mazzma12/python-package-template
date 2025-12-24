@@ -1,5 +1,5 @@
 """
-{{ cookiecutter.project_name }} - {{ cookiecutter.project_description }}
+{{ cookiecutter.package_name }} - {{ cookiecutter.project_description }}
 
 Like cowsay, but with alpacas!
 """
