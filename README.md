@@ -75,8 +75,10 @@ your-project/
 │   └── api.md
 ├── .github/                    # (optional)
 │   └── workflows/
-│       ├── ci.yml
-│       └── pypi-publish.yml    # (optional)
+│       ├── code-quality.yml
+│       ├── documentation.yml
+│       ├── docker.yml
+│       └── publish.yml    # (optional)
 ├── pyproject.toml              # Project configuration
 ├── README.md                   # Project documentation
 ├── .gitignore                  # Git ignore rules
