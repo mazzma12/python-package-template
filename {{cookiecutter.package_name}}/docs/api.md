@@ -1,17 +1,5 @@
 {% if cookiecutter.include_docs == "y" -%}
-# API Reference
+# Description
 
-This page contains the API documentation for {{ cookiecutter.project_name }}.
-
-## CLI Module
-
-::: {{ cookiecutter.package_name }}.cli
-
-## Alpaca Art Module
-
-::: {{ cookiecutter.package_name }}.alpacas
-
-## Formatter Module
-
-::: {{ cookiecutter.package_name }}.formatter
+This page contains the documentation for {{ cookiecutter.project_name }}.
 {%- endif %}
