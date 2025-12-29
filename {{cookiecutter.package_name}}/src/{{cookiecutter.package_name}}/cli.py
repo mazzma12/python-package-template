@@ -1,6 +1,7 @@
 """CLI interface for {{ cookiecutter.package_name }}."""
 
 from typing import Annotated
+
 import typer
 
 app = typer.Typer(

@@ -15,7 +15,6 @@ class TestCLI:
         assert result.exit_code == 0
         assert "Hello World!" in result.stdout
 
-
     def test_help_command(self):
         """Test help command."""
         runner = CliRunner()
